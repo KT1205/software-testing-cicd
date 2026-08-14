@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Software Testing CI/CD Demo</title>
+</head>
+
+<body>
+
+<h1 id="title">Software Testing CI/CD Demo</h1>
+
+<p id="message">
+    Application deployed successfully using Docker.
+</p>
+
+<button id="testButton" onclick="showMessage()">
+    Run Test
+</button>
+
+<p id="result"></p>
+
+<script>
+    function showMessage() {
+        document.getElementById("result").innerText =
+            "Selenium test executed successfully!";
+    }
+</script>
+
+</body>
+</html>

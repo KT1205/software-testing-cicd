@@ -2,14 +2,12 @@ pipeline {
 
     agent any
 
-    stages {
+    tools {
+        maven 'Maven-3.9.16'
+        jdk 'JDK-22'
+    }
 
-        stage('Checkout') {
-            steps {
-                echo 'Checking out source code from GitHub...'
-                checkout scm
-            }
-        }
+    stages {
 
         stage('Build Docker Image') {
             steps {
@@ -23,10 +21,9 @@ pipeline {
             steps {
                 echo 'Starting application container...'
 
-                bat '''
-                docker rm -f software-testing-container 2>NUL || exit /b 0
-                docker run -d --name software-testing-container -p 8080:80 software-testing-app
-                '''
+                bat 'docker rm -f software-testing-container 2>NUL || exit /b 0'
+
+                bat 'docker run -d --name software-testing-container -p 8080:80 software-testing-app'
             }
         }
 
@@ -42,12 +39,9 @@ pipeline {
     post {
 
         always {
-
             echo 'Stopping Docker container...'
 
-            bat '''
-            docker rm -f software-testing-container 2>NUL || exit /b 0
-            '''
+            bat 'docker rm -f software-testing-container 2>NUL || exit /b 0'
 
             junit 'target/surefire-reports/*.xml'
         }
